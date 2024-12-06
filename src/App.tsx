@@ -1,6 +1,6 @@
 import React from 'react';
-import {NameList, NameSelector} from "./components";
-import {getRandomName} from './libs/names';
+import {NameList, NameSelector} from "@/components";
+import {getRandomName} from '@/libs/names';
 
 function App() {
     const [namesWhitelist, setNamesWhitelist] = React.useState<string[]>([])

@@ -13,7 +13,7 @@ const H1 = styled.h1`
     margin: 0;
 `
 
-const P = styled.p`
+const H2 = styled.h2`
     font-family: "Roboto", serif;
     font-size: 1rem;
     font-weight: 300;
@@ -24,7 +24,7 @@ export function Logo() {
     return (
         <Container>
             <H1><b>N</b>Selector</H1>
-            <P>One name at a time</P>
+            <H2>One name at a time</H2>
         </Container>
     )
 }

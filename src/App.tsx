@@ -1,5 +1,6 @@
 import React from "react";
 import styled, {createGlobalStyle} from "styled-components";
+import {CenteredContentBox, Logo} from "@/components";
 import {getRandomName} from "@/libs/names.ts";
 import {NameSelector} from "@/components";
 import {NamesList} from "@/components";
@@ -8,12 +9,16 @@ const GlobalStyle = createGlobalStyle`
     body {
         font-family: 'Roboto', serif;
         background-color: #F5F5F5;
+        margin: 0;
+    }
+    
+    #root {
         width: 100vw;
         height: 100vh;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 0;
     }
 `
 
@@ -62,14 +67,17 @@ function App() {
     return (
         <>
             <GlobalStyle/>
-            {name !== null ? (
-                <NameSelector name={name} onSelection={handleNameSelection}/>
-            ) : (
-                <Message>
-                    <H3>There are no more names available</H3>
-                    <H4>But you can see <U onClick={() => setShowNamesList(true)}>the ones that you liked.</U></H4>
-                </Message>
-            )}
+            <Logo />
+            <CenteredContentBox flexGrow>
+                {name !== null ? (
+                    <NameSelector name={name} onSelection={handleNameSelection}/>
+                ) : (
+                    <Message>
+                        <H3>There are no more names available</H3>
+                        <H4>But you can see <U onClick={() => setShowNamesList(true)}>the ones that you liked.</U></H4>
+                    </Message>
+                )}
+            </CenteredContentBox>
             <NamesList
                 names={namesWhitelist}
                 isOpen={showNamesList}

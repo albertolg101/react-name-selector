@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import React from "react";
 import {Modal} from "@/components";
 import {ExpandMore} from "@/components/AnimatedIcons";
 import {CenteredContentBox} from "@/components";
@@ -34,24 +33,21 @@ const TopContainer = styled.div`
     right: 0;
 `
 
-export function NamesList({names}: NameListProps) {
-    const [showNamesList, setShowNamesList] = React.useState<boolean>(false)
+export function NamesList({names, isOpen, onOpen, onClose}: NameListProps) {
 
     return (
         <>
-            {showNamesList &&
-                <Modal isOpen={showNamesList} onClose={() => setShowNamesList(false)}>
-                    <Title>Liked Names:</Title>
-                    <OrderedList>
-                        {names.sort().map((name, index) => (
-                            <ListItem key={index}>{name}</ListItem>
-                        ))}
-                    </OrderedList>
-                </Modal>
-            }
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <Title>Liked Names:</Title>
+                <OrderedList>
+                    {names.sort().map((name, index) => (
+                        <ListItem key={index}>{name}</ListItem>
+                    ))}
+                </OrderedList>
+            </Modal>
             <TopContainer>
                 <CenteredContentBox>
-                    <IconButton onClick={() => setShowNamesList(true)}>
+                    <IconButton onClick={onOpen}>
                         <ExpandMore/>
                     </IconButton>
                 </CenteredContentBox>
@@ -62,4 +58,7 @@ export function NamesList({names}: NameListProps) {
 
 export interface NameListProps {
     names: string[]
+    isOpen: boolean
+    onOpen: () => void
+    onClose: () => void
 }

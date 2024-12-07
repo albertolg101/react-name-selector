@@ -1,5 +1,5 @@
 import React from "react";
-import {createGlobalStyle} from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 import {getRandomName} from "@/libs/names.ts";
 import {NameSelector} from "@/components";
 import {NamesList} from "@/components";
@@ -13,13 +13,41 @@ const GlobalStyle = createGlobalStyle`
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 0;
+    }
+`
+
+const Message = styled.div`
+    user-select: none;
+`
+
+const H3 = styled.h3`
+    font-family: "Roboto", serif;
+    font-size: 2rem;
+    margin: 1rem 0;
+`
+
+const H4 = styled.h4`
+    font-family: "Roboto", serif;
+    font-size: 1rem;
+    font-weight: 400;
+`
+
+const U = styled.u`
+    cursor: pointer;
+    color: #2C302E;
+    font-weight: 500;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
     }
 `
 
 function App() {
     const [namesWhitelist, setNamesWhitelist] = React.useState<string[]>([])
     const [namesBlacklist, setNamesBlacklist] = React.useState<string[]>([])
-    const [name, setName] = React.useState<string>(getRandomName())
+    const [showNamesList, setShowNamesList] = React.useState<boolean>(false)
+    const [name, setName] = React.useState<string | null>(getRandomName())
 
     function handleNameSelection(name: string, selection: 'yes' | 'maybe' | 'no') {
         if (selection === 'yes') {
@@ -34,8 +62,20 @@ function App() {
     return (
         <>
             <GlobalStyle/>
-            <NameSelector name={name} onSelection={handleNameSelection}/>
-            <NamesList names={namesWhitelist}/>
+            {name !== null ? (
+                <NameSelector name={name} onSelection={handleNameSelection}/>
+            ) : (
+                <Message>
+                    <H3>There are no more names available</H3>
+                    <H4>But you can see <U onClick={() => setShowNamesList(true)}>the ones that you liked.</U></H4>
+                </Message>
+            )}
+            <NamesList
+                names={namesWhitelist}
+                isOpen={showNamesList}
+                onOpen={() => setShowNamesList(true)}
+                onClose={() => setShowNamesList(false)}
+            />
         </>
     )
 }

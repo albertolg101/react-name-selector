@@ -53,7 +53,10 @@ export function Modal({children, isOpen, onClose}: ModalProps) {
 
     function handleOnClose() {
         setIsClosing(true)
-        setTimeout(() => onClose(), 500)
+        setTimeout(() => {
+            setIsClosing(false)
+            onClose()
+        }, 500)
     }
 
     return (

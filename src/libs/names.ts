@@ -11,9 +11,14 @@ export const NAMES: string[] = [
     "Wyatt", "Aria", "Jayden", "Zoey", "Gabriel"
 ]
 
-export function getRandomName(blacklist?: string[]): string {
+export function getRandomName(blacklist?: string[]): string | null {
     blacklist = blacklist || []
     const validNames = NAMES.filter((name: string) => !blacklist.includes(name))
+
+    if (validNames.length === 0) {
+        return null
+    }
+
     const index = Math.floor(Math.random() * validNames.length)
     return validNames[index]
 }

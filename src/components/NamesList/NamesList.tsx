@@ -1,26 +1,9 @@
 import styled from "styled-components";
-import {Close} from "@mui/icons-material";
-import {IconButton} from "@/components";
+import React from "react";
 import {Modal} from "@/components";
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    width: 70%;
-    height: 80%;
-    min-width: 400px;
-    min-height: 400px;
-    padding: 20px;
-    box-sizing: border-box;
-    border-radius: 0 0 20px 20px;
-`
-
-const TopContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-`
+import {ExpandMore} from "@/components/AnimatedIcons";
+import {CenteredContentBox} from "@/components";
+import {IconButton} from "@/components";
 
 const Title = styled.h3`
     font-family: "Roboto", serif;
@@ -43,27 +26,40 @@ const ListItem = styled.li`
     list-style-type: none;
 `
 
-export function NamesList({names, onClose}: NameListProps) {
+const TopContainer = styled.div`
+    position: fixed;
+    padding-top: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+`
+
+export function NamesList({names}: NameListProps) {
+    const [showNamesList, setShowNamesList] = React.useState<boolean>(false)
+
     return (
-        <Modal onClose={onClose}>
-            <Container>
-                <TopContainer>
-                    <IconButton onClick={onClose}>
-                        <Close fontSize="large"/>
+        <>
+            {showNamesList &&
+                <Modal isOpen={showNamesList} onClose={() => setShowNamesList(false)}>
+                    <Title>Liked Names:</Title>
+                    <OrderedList>
+                        {names.sort().map((name, index) => (
+                            <ListItem key={index}>{name}</ListItem>
+                        ))}
+                    </OrderedList>
+                </Modal>
+            }
+            <TopContainer>
+                <CenteredContentBox>
+                    <IconButton onClick={() => setShowNamesList(true)}>
+                        <ExpandMore/>
                     </IconButton>
-                </TopContainer>
-                <Title>Liked Names:</Title>
-                <OrderedList>
-                    {names.sort().map((name, index) => (
-                        <ListItem key={index}>{name}</ListItem>
-                    ))}
-                </OrderedList>
-            </Container>
-        </Modal>
+                </CenteredContentBox>
+            </TopContainer>
+        </>
     )
 }
 
 export interface NameListProps {
     names: string[]
-    onClose: () => void
 }

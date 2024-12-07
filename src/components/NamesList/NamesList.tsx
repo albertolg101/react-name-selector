@@ -29,8 +29,14 @@ const TopContainer = styled.div`
     position: fixed;
     padding-top: 20px;
     top: 0;
-    left: 0;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
+`
+
+const H3 = styled.h3`
+    font-family: "Roboto", serif;
+    font-size: 1rem;
+    margin: 0;
 `
 
 export function NamesList({names, isOpen, onOpen, onClose}: NameListProps) {
@@ -48,6 +54,7 @@ export function NamesList({names, isOpen, onOpen, onClose}: NameListProps) {
             <TopContainer>
                 <CenteredContentBox>
                     <IconButton onClick={onOpen}>
+                        <H3>Liked Names</H3>
                         <ExpandMore/>
                     </IconButton>
                 </CenteredContentBox>

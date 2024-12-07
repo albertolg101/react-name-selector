@@ -28,7 +28,7 @@ function App() {
             setNamesBlacklist([...namesBlacklist, name])
         }
 
-        setName(getRandomName([...namesWhitelist, ...namesBlacklist]))
+        setName(getRandomName([...namesWhitelist, ...namesBlacklist, name]))
     }
 
     return (

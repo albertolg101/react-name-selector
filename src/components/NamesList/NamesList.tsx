@@ -43,7 +43,7 @@ const ListItem = styled.li`
     list-style-type: none;
 `
 
-export function NameList({names, onClose}: NameListProps) {
+export function NamesList({names, onClose}: NameListProps) {
     return (
         <Modal onClose={onClose}>
             <Container>

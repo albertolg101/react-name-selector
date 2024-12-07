@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {createGlobalStyle} from "styled-components";
 import {getRandomName} from "@/libs/names.ts";
 import {IconButton, NameSelector} from "@/components";
-import {NameList} from "@/components";
+import {NamesList} from "@/components";
 import {ExpandMore} from "@mui/icons-material";
 
 const GlobalStyle = createGlobalStyle`
@@ -55,7 +55,7 @@ function App() {
             </TopContainer>
             <NameSelector name={name} onSelection={handleNameSelection}/>
             {showNameList &&
-                <NameList names={namesWhitelist} onClose={() => setShowNameList(false)}/>
+                <NamesList names={namesWhitelist} onClose={() => setShowNameList(false)}/>
             }
         </>
     )

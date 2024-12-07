@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
     const [namesWhitelist, setNamesWhitelist] = React.useState<string[]>([])
     const [namesBlacklist, setNamesBlacklist] = React.useState<string[]>([])
-    const [name, setName] = React.useState<string>(getRandomName(namesWhitelist, namesBlacklist))
+    const [name, setName] = React.useState<string>(getRandomName())
 
     function handleNameSelection(name: string, selection: 'yes' | 'maybe' | 'no') {
         if (selection === 'yes') {
@@ -28,7 +28,7 @@ function App() {
             setNamesBlacklist([...namesBlacklist, name])
         }
 
-        setName(getRandomName(namesWhitelist, namesBlacklist))
+        setName(getRandomName([...namesWhitelist, ...namesBlacklist]))
     }
 
     return (

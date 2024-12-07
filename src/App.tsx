@@ -1,6 +1,19 @@
-import React from 'react';
-import {NameList, NameSelector} from "@/components";
-import {getRandomName} from '@/libs/names';
+import React from "react";
+import {createGlobalStyle} from "styled-components";
+import {getRandomName} from "@/libs/names.ts";
+import {NameSelector} from "@/components";
+
+const GlobalStyle = createGlobalStyle`
+    body {
+        font-family: 'Roboto', serif;
+        background-color: #F5F5F5;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+`
 
 function App() {
     const [namesWhitelist, setNamesWhitelist] = React.useState<string[]>([])
@@ -18,11 +31,12 @@ function App() {
     }
 
     return (
-        <div>
+        <>
+            <GlobalStyle/>
             <NameSelector name={name} onSelection={handleNameSelection}/>
-            <hr />
-            <NameList names={namesWhitelist} />
-        </div>
+            {/*<hr/>*/}
+            {/*<NameList names={namesWhitelist}/>*/}
+        </>
     )
 }
 

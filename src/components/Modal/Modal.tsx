@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import {Overlay} from "@/components";
-import {CenteredContentBox} from "@/components";
-import {IconButton} from "@/components";
+import {Overlay} from "@/components/Theme";
+import {FlexBox} from "@/components/Theme";
+import {IconButton} from "@/components/Theme";
 import {ExpandLess} from "@/components/AnimatedIcons";
 
-const Container = styled.div
-   .withConfig({
-        shouldForwardProp: (prop) => prop !== 'isClosing'
-    })<{ isClosing: boolean }>`
+interface ContainerProps {
+    $isClosing: boolean
+}
+
+const Container = styled.div<ContainerProps>`
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -19,8 +20,8 @@ const Container = styled.div
     padding: 20px 20px 10px 20px;
     box-sizing: border-box;
     border-radius: 0 0 20px 20px;
-    ${(props) => !props.isClosing && 'animation: slideIn 0.5s ease forwards'};
-    ${(props) => props.isClosing && 'animation: slideOut 0.5s ease forwards'};
+    ${({$isClosing}) => !$isClosing && 'animation: slideIn 0.5s ease forwards'};
+    ${({$isClosing}) => $isClosing && 'animation: slideOut 0.5s ease forwards'};
 
     @keyframes slideIn {
         from {
@@ -41,12 +42,11 @@ const Container = styled.div
     }
 `
 
-const ChildrenContainer = styled.div`
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
-`
+interface ModalProps {
+    children: React.ReactNode
+    isOpen: boolean
+    onClose: () => void
+}
 
 export function Modal({children, isOpen, onClose}: ModalProps) {
     const [isClosing, setIsClosing] = React.useState<boolean>(false)
@@ -61,22 +61,16 @@ export function Modal({children, isOpen, onClose}: ModalProps) {
 
     return (
         <Overlay isOpen={isOpen} onClose={handleOnClose}>
-            <Container isClosing={isClosing}>
-                <ChildrenContainer>
+            <Container $isClosing={isClosing}>
+                <FlexBox $flexGrow $direction="column" $overflow="scroll">
                     {children}
-                </ChildrenContainer>
-                <CenteredContentBox>
+                </FlexBox>
+                <FlexBox $centered>
                     <IconButton onClick={handleOnClose}>
                         <ExpandLess/>
                     </IconButton>
-                </CenteredContentBox>
+                </FlexBox>
             </Container>
         </Overlay>
     )
-}
-
-interface ModalProps {
-    children: React.ReactNode
-    isOpen: boolean
-    onClose: () => void
 }

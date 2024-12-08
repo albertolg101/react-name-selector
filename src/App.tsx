@@ -1,52 +1,15 @@
 import React from "react";
-import styled, {createGlobalStyle} from "styled-components";
-import {CenteredContentBox, Logo} from "@/components";
-import {getRandomName} from "@/libs/names.ts";
+import {ThemeProvider} from "styled-components";
+import {CustomTheme} from "@/libs/CustomTheme";
+import {GlobalStyle} from "@/libs/CustomTheme";
+import {Box} from "@/components/Theme";
+import {FlexBox} from "@/components/Theme";
+import {IconButton} from "@/components/Theme";
+import {Typography} from "@/components/Theme";
+import {Logo} from "@/components";
+import {getRandomName} from "@/libs/names";
 import {NameSelector} from "@/components";
 import {NamesList} from "@/components";
-
-const GlobalStyle = createGlobalStyle`
-    body {
-        font-family: 'Roboto', serif;
-        background-color: #F5F5F5;
-        margin: 0;
-    }
-    
-    #root {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-`
-
-const Message = styled.div`
-    user-select: none;
-`
-
-const H3 = styled.h3`
-    font-family: "Roboto", serif;
-    font-size: 2rem;
-    margin: 1rem 0;
-`
-
-const H4 = styled.h4`
-    font-family: "Roboto", serif;
-    font-size: 1rem;
-    font-weight: 400;
-`
-
-const U = styled.u`
-    cursor: pointer;
-    color: #2C302E;
-    font-weight: 500;
-    text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
-`
 
 function App() {
     const [namesWhitelist, setNamesWhitelist] = React.useState<string[]>([])
@@ -65,26 +28,33 @@ function App() {
     }
 
     return (
-        <>
+        <ThemeProvider theme={CustomTheme}>
             <GlobalStyle/>
             <Logo />
-            <CenteredContentBox flexGrow>
+            <FlexBox $flexGrow $centered>
                 {name !== null ? (
                     <NameSelector name={name} onSelection={handleNameSelection}/>
                 ) : (
-                    <Message>
-                        <H3>There are no more names available</H3>
-                        <H4>But you can see <U onClick={() => setShowNamesList(true)}>the ones that you liked.</U></H4>
-                    </Message>
+                    <Box>
+                        <Typography as="h3" $weight="bold">There are no more names available</Typography>
+                        <Typography as="h4" $size="p">
+                            {"but you can see "}
+                            <Typography as="span" $size="p" $weight="bold" $underlinedOnHover>
+                                <IconButton onClick={() => setShowNamesList(true)}>
+                                    the ones that you liked.
+                                </IconButton>
+                            </Typography>
+                        </Typography>
+                    </Box>
                 )}
-            </CenteredContentBox>
+            </FlexBox>
             <NamesList
                 names={namesWhitelist}
                 isOpen={showNamesList}
                 onOpen={() => setShowNamesList(true)}
                 onClose={() => setShowNamesList(false)}
             />
-        </>
+        </ThemeProvider>
     )
 }
 

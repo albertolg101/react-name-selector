@@ -14,6 +14,12 @@ const Container = styled.div`
     align-items: flex-start;
 `
 
+export interface OverlayProps {
+    children: React.ReactNode
+    isOpen: boolean
+    onClose: () => void
+}
+
 export function Overlay({children, isOpen, onClose}: OverlayProps) {
     function handleClick(event: React.MouseEvent<HTMLDivElement>) {
         if (event.target === event.currentTarget) {
@@ -28,10 +34,4 @@ export function Overlay({children, isOpen, onClose}: OverlayProps) {
         </Container>,
         document.body,
     )
-}
-
-interface OverlayProps {
-    children: React.ReactNode
-    isOpen: boolean
-    onClose: () => void
 }
